@@ -1,26 +1,37 @@
-// A working best-site-01 entry (Node 22, standard library only): the site is this directory's app/ folder, plain
-// static files a browser opens at app/index.html (ES modules, CSS, no build step), its content held in its own files:
-// nothing it runs, styles or shows loads over the network. The program hands it in: it copies app/ and screenshots/
-// from beside this file to /output and writes /output/dossier.json, the summary the judge reads (your screenshots, the
-// first load's files and bytes, and your source), with the vendored make.fun library. Leave vendor/makefun-frontend.ts
-// as it is: the scorer requires dossier.json to be byte for byte what its own copy writes.
+// Nusantara in Figures — the hand-in program (Node 22, standard library only).
+// The site itself is this directory's app/ folder: plain static files a browser
+// opens at app/index.html (ES modules, CSS, no build step), its figures held in
+// app/data.js — nothing the site runs, styles or shows loads over the network.
+// This program hands the entry in: it first checks the four screenshots the
+// dossier will carry are really on disk, then copies app/ and screenshots/
+// from beside this file to /output and writes /output/dossier.json, the summary
+// the judge reads (the screenshots, the first load's files and bytes, and the
+// source), with the vendored make.fun library. vendor/makefun-frontend.ts is
+// left exactly as it is: the scorer requires dossier.json to be byte for byte
+// what its own copy writes.
 //
-// A starting point, not a winner: a plain recipe collection, a list of recipes and a page for each. Build the site the
-// brief asks for in app/ (its content, ease of use, a phone layout, its look), put 3 or 4 PNG or JPEG screenshots of
-// it running in screenshots/ (the first by name is the cover; one may be a 390 x 844 phone view; shots.json says which
-// views this starter's were taken of), and run it.
-//
-// Serve it locally with `node serve.ts`, then open http://localhost:8080.
+// Serve the site locally with `node serve.ts`, then open http://localhost:8123.
 // Outside the grader's container, MAKEFUN_OUTPUT_DIR stands in for /output:
 //   mkdir -p out && MAKEFUN_OUTPUT_DIR=out node main.ts
 
-import { cpSync, existsSync, mkdirSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { buildDossier } from './vendor/makefun-frontend.ts';
 
 const here = fileURLToPath(new URL('.', import.meta.url));
 const out = process.env.MAKEFUN_OUTPUT_DIR ?? '/output';
+
+// The dossier's cover and pages are these four captures of the running site
+// (shots.json names the views). Refuse to hand in a dossier whose pictures
+// are missing or empty rather than let the judge grade a blank entry.
+const EXPECTED_SHOTS = ['1-overview.jpg', '2-population.jpg', '3-economy.jpg', '4-overview-phone.jpg'];
+for (const name of EXPECTED_SHOTS) {
+  const p = join(here, 'screenshots', name);
+  if (!existsSync(p) || statSync(p).size === 0) {
+    throw new Error(`screenshot missing or empty: screenshots/${name} — capture the site before handing in`);
+  }
+}
 
 mkdirSync(out, { recursive: true });
 cpSync(join(here, 'app'), join(out, 'app'), { recursive: true });
