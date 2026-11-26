@@ -1,0 +1,219 @@
+/* Nusantara in Figures — original design: a broadsheet front page crossed
+   with a statistical yearbook. Ink-black text, one signal red, hairline
+   rules, tabular numerals. No webfonts, no images, nothing remote. */
+
+:root {
+  --ink: #191a1e;
+  --muted: #5c6068;
+  --paper: #faf8f4;
+  --card: #ffffff;
+  --line: #ddd6c9;
+  --red: #b3232a;
+  --red-dark: #8c1a20;
+  --gold: #b98a1c;
+  --green: #1e7a4f;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 17px;
+  line-height: 1.5;
+}
+
+.masthead {
+  border-bottom: 3px double var(--ink);
+  padding: 18px 22px 12px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 10px 28px;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.brand {
+  text-decoration: none;
+  color: var(--ink);
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+
+.brand-mark {
+  background: var(--red);
+  color: #fff;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  font-size: 22px;
+  padding: 2px 9px 3px;
+  border-radius: 2px;
+}
+
+.brand-text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  font-size: 21px;
+}
+
+.brand-text em {
+  font-family: Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: 0;
+  text-transform: lowercase;
+  color: var(--red-dark);
+}
+
+.tabs { display: flex; gap: 4px; margin-left: auto; flex-wrap: wrap; }
+
+.tabs a {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  text-decoration: none;
+  padding: 6px 11px;
+  border: 1px solid transparent;
+  border-radius: 999px;
+}
+
+.tabs a:hover { color: var(--ink); border-color: var(--line); }
+
+.tabs a.on {
+  color: #fff;
+  background: var(--ink);
+}
+
+.page { max-width: 1160px; margin: 0 auto; padding: 26px 22px 10px; }
+
+.kicker {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin: 0 0 6px;
+}
+
+h1 {
+  font-size: clamp(30px, 5vw, 46px);
+  line-height: 1.08;
+  margin: 0 0 10px;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 23px;
+  margin: 30px 0 8px;
+  border-top: 2px solid var(--ink);
+  padding-top: 10px;
+}
+
+h3 { font-size: 18px; margin: 0 0 6px; }
+
+.standfirst { font-size: 19px; color: #33363c; max-width: 68ch; margin: 0 0 8px; }
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+  margin: 20px 0 6px;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--red);
+  padding: 14px 16px 12px;
+}
+
+.card .label {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 11.5px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.card .value {
+  font-size: 34px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  line-height: 1.15;
+  margin: 3px 0;
+}
+
+.card .sub { font-size: 14px; color: #3c3f45; }
+
+.card .delta {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12.5px;
+  color: var(--green);
+  margin-top: 5px;
+}
+
+.cols { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+
+@media (max-width: 760px) { .cols { grid-template-columns: 1fr; } }
+
+figure.chart {
+  margin: 14px 0;
+  background: var(--card);
+  border: 1px solid var(--line);
+  padding: 14px 16px 8px;
+}
+
+figure.chart figcaption {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  color: var(--muted);
+  margin-top: 6px;
+}
+
+figure.chart svg { width: 100%; height: auto; display: block; }
+
+table.facts { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 16px; }
+
+table.facts th, table.facts td {
+  text-align: left;
+  padding: 7px 10px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+table.facts th {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+
+table.facts td.num { font-variant-numeric: tabular-nums; text-align: right; white-space: nowrap; }
+table.facts th.num { text-align: right; }
+
+.note {
+  border-left: 3px solid var(--gold);
+  background: #fff;
+  padding: 10px 14px;
+  font-size: 16px;
+  margin: 16px 0;
+}
+
+.src { font-size: 13.5px; color: var(--muted); font-style: italic; }
+
+.colophon {
+  max-width: 1160px;
+  margin: 26px auto 0;
+  padding: 14px 22px 30px;
+  border-top: 1px solid var(--line);
+  font-size: 13.5px;
+  color: var(--muted);
+}
